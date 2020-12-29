@@ -7,7 +7,8 @@ class node_data:
         self.key = key
         self.tag = 0
         self.pos = pos
-
+    def get_tag(self):
+        return self.tag
 
 class edge_data:
 
