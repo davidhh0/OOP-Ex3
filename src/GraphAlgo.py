@@ -24,7 +24,10 @@ class GraphAlgo(GraphAlgoInterface):
         pass
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        pass
+        path = []
+
+
+
 
     def connected_component(self, id1: int) -> list:
         pass
