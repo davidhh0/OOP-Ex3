@@ -4,6 +4,7 @@ import queue
 from src.data import node_data
 from src.DiGraph import DiGraph
 from src.GraphAlgoInterface import GraphAlgoInterface
+from src.data import nodeDataEncoder
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -13,7 +14,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def load_from_json(self, file_name: str) -> bool:
         file_dict = None
-        with open(file_name, 'r') as File:
+        with open(file_name,'r') as File:
             file_dict = json.load(File)
 
         if file_dict:
@@ -27,7 +28,7 @@ class GraphAlgo(GraphAlgoInterface):
 
             lst_edges = list(file_dict["Edges"])
             for edge in lst_edges:
-                self.graph.add_edge(edge["src"], edge["dest"], edge["w"])
+                self.graph.add_edge(edge["src"],edge["dest"],edge["w"])
         else:
             return False
         return True
