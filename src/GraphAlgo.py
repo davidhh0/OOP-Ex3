@@ -8,6 +8,8 @@ from src.data import nodeDataEncoder
 
 
 class GraphAlgo(GraphAlgoInterface):
+    def get_graph(self):
+        return self.graph
 
     def __init__(self, g=None):
         self.graph = g
@@ -65,6 +67,8 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
+        if id1 not in self.graph.nodes.keys() or id2 not in self.graph.nodes.keys():
+            return float('inf'),None
         answer = []
         visited = {}
         parent = {}
@@ -94,13 +98,13 @@ class GraphAlgo(GraphAlgoInterface):
                         parent[g.nodes[neig]] = node
                         PQ.append(g.nodes[neig])
         if sofi == None or sofi.key != id2:
-            return None
-        answer.append(g.nodes[id2])
+            return float('inf'),None
+        answer.append(g.nodes[id2].key)
         while True:
             if sofi.key == id1:
                 break
             dad: node_data = parent[sofi]
-            answer.insert(0, dad)
+            answer.insert(0, dad.key)
             sofi = parent[sofi]
 
         return g.nodes[id2].tag, answer

@@ -65,6 +65,11 @@ class MyTestCase(unittest.TestCase):
         algo.graph = create_graph_random()
         algo.save_to_json("Data.json")
 
+    def test_big_dijkstra(self):
+        algo = GraphAlgo()
+        algo.load_from_json("../data/A5")
+        print(algo.shortest_path(1, 7))
+
 
 def create_graph_random():
     g = DiGraph()

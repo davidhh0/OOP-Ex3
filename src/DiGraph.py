@@ -20,7 +20,7 @@ class DiGraph(GraphInterface):
         return self.NumberOfEdges
 
     def get_all_v(self) -> dict:
-        return self.nodes
+        return list(self.nodes.values())
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if node_id in self.nodes.keys():
@@ -70,9 +70,9 @@ class DiGraph(GraphInterface):
         for id, dic in self.inComingEdges.items():
             if node_id in dic.keys():
                 del dic[node_id]
-        self.NumberOfNodes -=1
+        self.NumberOfNodes -= 1
         self.ModeCount += 1
-        self.NumberOfEdges-=numberOfEdges
+        self.NumberOfEdges -= numberOfEdges
 
         # ============================== Consider deleting all edges FROM and TO node_id!!==============================
         return True

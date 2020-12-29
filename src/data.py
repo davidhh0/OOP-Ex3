@@ -15,12 +15,14 @@ class node_data:
 
     def __repr__(self):
         if self.pos:
-            return str({"pos":",".join(self.pos), "id":self.key})
-        return str({"id":self.key})
+            return str({"pos": self.pos, "id": self.key})
+        return str({"id": self.key})
+
 
 class nodeDataEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__
+
 
 class edge_data:
 
