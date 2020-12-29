@@ -2,6 +2,7 @@ import unittest
 import random
 
 from src.DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
 
 
 class MyTestCase(unittest.TestCase):
@@ -35,6 +36,17 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g.NumberOfNodes, 14)
         self.assertEqual(g.NumberOfEdges, 20)
 
+
+    def test_algo_load(self):
+        algo = GraphAlgo()
+        print(algo.load_from_json("../data/A5"))
+        graph:DiGraph = algo.graph
+        print(graph.NumberOfNodes)
+        print(graph.NumberOfEdges)
+    def test_algo_save(self):
+        algo = GraphAlgo()
+        algo.graph = create_graph_random()
+        algo.save_to_json("Data.json")
 
 def create_graph_random():
     g = DiGraph()
