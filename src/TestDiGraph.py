@@ -1,10 +1,23 @@
 import unittest
 import random
 
+from src import data
+from src.GraphAlgo import GraphAlgo
+
 from src.DiGraph import DiGraph
 
 
 class MyTestCase(unittest.TestCase):
+    def test_priority_tags(self):
+        # Priority Queue will be : out = min(graph.nodes , key = get_tag)
+        g = DiGraph()
+        for i in range(10):
+            g.add_node(i)
+            g.nodes[i].tag = random.randint(1, 100)
+        out = min(g.nodes.values(), key=data.node_data.get_tag)
+        for i in range(10):
+            print(g.nodes[i].tag)
+        print("Min", out.tag)
 
     def test_nodesize(self):
         g = create_graph_random()
