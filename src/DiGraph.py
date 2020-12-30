@@ -78,7 +78,9 @@ class DiGraph(GraphInterface):
         return True
 
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
-        if node_id2 not in self.edges[node_id1] or node_id1 not in self.nodes or node_id2 not in self.nodes:
+        if node_id1 not in self.edges.keys():
+            return False
+        if node_id2 not in self.edges[node_id1].keys() or node_id1 not in self.nodes.keys() or node_id2 not in self.nodes.keys():
             return False
         del self.edges[node_id1][node_id2]
         del self.outEdges[node_id1][node_id2]

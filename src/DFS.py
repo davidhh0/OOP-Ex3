@@ -1,3 +1,4 @@
+import operator
 from typing import List
 import json
 import _collections
@@ -14,7 +15,7 @@ class dfs:
         self.dfs_colorMap = {}
         self.dfs_parent = {}
         self.dfs_start = {}
-        self.dfs_finish = {}
+        self.dfs_finish = []
         self.dfs_finish_transpose = {}
         self.dfs_time = 0
         self.list = []
@@ -25,8 +26,6 @@ class dfs:
             self.dfs_transpose_run()
         else:
             self.dfs_run()
-
-
 
     def dfs_transpose_run(self):
         self.dfs_start.clear()
@@ -42,12 +41,14 @@ class dfs:
                 self.dfs_colorMap[i] = 'white'
 
         while self.dfs_finish:
-            node = self.dfs_finish.popitem()
+            node = self.dfs_finish.pop(0)
             u = node[0]
             if self.dfs_colorMap[u] == 'white':
+                self.dfs_colorMap[u] = 'gray'
                 self.dfs_visit_transpose(u)
-        self.get_components()
-
+                self.get_components()
+        if self.greenCount != self.graph.NumberOfNodes:
+            self.connected_components()
 
     def dfs_run(self):
         self.dfs_start.clear()
@@ -65,7 +66,8 @@ class dfs:
         for i in self.graph.nodes.keys():
             if self.dfs_colorMap[i] == 'white':
                 self.dfs_visit(i)
-        self.dfs_finish = _collections.OrderedDict(sorted(self.dfs_finish.items(), reverse=True))
+
+        self.dfs_finish = sorted(self.dfs_finish, key=lambda tup: tup[1], reverse=True)
         self.connected_components(True)
 
     def dfs_visit(self, u):
@@ -75,10 +77,11 @@ class dfs:
         for i in self.graph.edges[u].keys():
             if self.dfs_colorMap[i] == 'white':
                 self.dfs_parent[i] = u
+                self.dfs_colorMap[i] = 'gray'
                 self.dfs_visit(i)
         self.dfs_colorMap[u] = 'black'
         self.dfs_time += 1
-        self.dfs_finish[u] = self.dfs_time
+        self.dfs_finish.append((u, self.dfs_time))
 
     def dfs_visit_transpose(self, u):
         self.dfs_colorMap[u] = 'gray'
@@ -101,5 +104,3 @@ class dfs:
                 self.dfs_colorMap[i] = 'green'
                 self.greenCount += 1
         self.list.append(conList)
-        if self.greenCount != self.graph.NumberOfNodes:
-            self.connected_components()
