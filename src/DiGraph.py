@@ -92,10 +92,14 @@ class DiGraph(GraphInterface):
         return self.ModeCount
 
     def all_in_edges_of_node(self, id1: int) -> dict:
+        if id1 not in self.inComingEdges.keys():
+            return {}
         return self.inComingEdges[id1]
 
     def all_out_edges_of_node(self, id1: int) -> dict:
+        if id1 not in self.outEdges.keys():
+            return {}
         return self.outEdges[id1]
 
     def __repr__(self):
-        return "The graph contains " + str(self.NumberOfNodes) + " nodes and " + str(self.NumberOfEdges) + " edges"
+        return "Graph: |V|=" + str(self.NumberOfNodes) + " , |E|=" + str(self.NumberOfEdges)

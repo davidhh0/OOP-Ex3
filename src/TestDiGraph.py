@@ -70,6 +70,21 @@ class MyTestCase(unittest.TestCase):
         algo.load_from_json("../data/A5")
         print(algo.shortest_path(1, 7))
 
+    def test_empty_list(self):
+        g = DiGraph()
+        g.add_node(1)
+        print(g.all_in_edges_of_node(1))
+
+
+    def test_dfs(self):
+        algo = GraphAlgo()
+        print(algo.load_from_json("../data/A0"))
+        graph: DiGraph = algo.graph
+        print(graph.NumberOfNodes)
+        print(graph.NumberOfEdges)
+        algo.connected_components()
+
+
 
 def create_graph_random():
     g = DiGraph()

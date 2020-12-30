@@ -1,10 +1,11 @@
 from typing import List
 import json
-import queue
+import _collections
 from src.data import node_data
 from src.DiGraph import DiGraph
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.data import nodeDataEncoder
+from src.DFS import dfs
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -12,7 +13,13 @@ class GraphAlgo(GraphAlgoInterface):
         return self.graph
 
     def __init__(self, g=None):
-        self.graph = g
+        self.graph: DiGraph = g
+        self.dfs_colorMap = {}
+        self.dfs_parent = {}
+        self.dfs_start = {}
+        self.dfs_finish = {}
+        self.dfs_finish_transpose = {}
+        self.dfs_time = 0
 
     def load_from_json(self, file_name: str) -> bool:
         file_dict = None
@@ -68,7 +75,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         if id1 not in self.graph.nodes.keys() or id2 not in self.graph.nodes.keys():
-            return float('inf'),None
+            return float('inf'), None
         answer = []
         visited = {}
         parent = {}
@@ -97,8 +104,8 @@ class GraphAlgo(GraphAlgoInterface):
                         g.nodes[neig].tag = distance
                         parent[g.nodes[neig]] = node
                         PQ.append(g.nodes[neig])
-        if sofi == None or sofi.key != id2:
-            return float('inf'),None
+        if sofi is None or sofi.key != id2:
+            return float('inf'), None
         answer.append(g.nodes[id2].key)
         while True:
             if sofi.key == id1:
@@ -113,7 +120,10 @@ class GraphAlgo(GraphAlgoInterface):
         pass
 
     def connected_components(self) -> List[list]:
-        pass
+        run = dfs(self.graph)
+        run.connected_components()
+
+        return run.list
 
     def plot_graph(self) -> None:
         pass
