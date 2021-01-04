@@ -75,10 +75,11 @@ class dfs:
         self.dfs_time += 1
         self.dfs_start[u] = self.dfs_time
         for i in self.graph.edges[u].keys():
-            if self.dfs_colorMap[i] == 'white':
-                self.dfs_parent[i] = u
-                self.dfs_colorMap[i] = 'gray'
-                self.dfs_visit(i)
+            if i in self.dfs_colorMap.keys():
+                if self.dfs_colorMap[i] == 'white':
+                    self.dfs_parent[i] = u
+                    self.dfs_colorMap[i] = 'gray'
+                    self.dfs_visit(i)
         self.dfs_colorMap[u] = 'black'
         self.dfs_time += 1
         self.dfs_finish.append((u, self.dfs_time))

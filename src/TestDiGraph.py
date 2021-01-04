@@ -1,10 +1,7 @@
 import unittest
 import random
-from queue import Queue
 from src.data import node_data
-from src import data
-from src.GraphAlgo import GraphAlgo
-
+import timeit
 from src.DiGraph import DiGraph
 from src.GraphAlgo import GraphAlgo
 
@@ -65,32 +62,57 @@ class MyTestCase(unittest.TestCase):
         algo.graph = create_graph_random()
         algo.save_to_json("Data.json")
 
+    def test_big_dfs(self):
+        algo = GraphAlgo()
+        algo.load_from_json("../data/A5")
+        random.seed(55555)
+        for i in range(1000):
+            b = random.randint(0, 47)
+            c = random.randint(0, 47)
+            algo.graph.remove_edge(b, c)
+            algo.graph.remove_edge(c, b)
+        for i in algo.graph.nodes.keys():
+            print(algo.connected_component(i))
+
     def test_big_dijkstra(self):
         algo = GraphAlgo()
         algo.load_from_json("../data/A5")
-        print(algo.shortest_path(1, 7))
+        print(list(algo.graph.nodes.keys()))
+        for i in algo.graph.nodes.keys():
+            for j in algo.graph.nodes.keys():
+                x = algo.shortest_path(i, j)
 
     def test_empty_list(self):
         g = DiGraph()
         g.add_node(1)
         print(g.all_in_edges_of_node(1))
 
-
     def test_dfs(self):
         algo = GraphAlgo()
-        print(algo.load_from_json("../data/A0"))
+        print(algo.load_from_json("../data/A5"))
         graph: DiGraph = algo.graph
         print(graph.NumberOfNodes)
         print(graph.NumberOfEdges)
-        algo.connected_components()
+        #   print(algo.connected_component(0))
+        self.assertEqual(len(algo.connected_component(0)), 48)
+        self.assertEqual(len(algo.connected_components()), 1)
 
+    def test_shortest_path(self):
+        algo = GraphAlgo()
+        algo.load_from_json("../data/A5")
+        print(algo.shortest_path(7, 7))
+
+    def test_plot_on_big_random_graph(self):
+        g = create_graph_random()
+        algo = GraphAlgo(g)
+        algo.plot_graph()
 
 
 def create_graph_random():
     g = DiGraph()
     for i in range(10):
         g.add_node(i)
-    for i in range(20):
+    for i in range(10):
         u = random.randint(0, 9)
         v = random.randint(0, 9)
         w = random.randint(0, 100)

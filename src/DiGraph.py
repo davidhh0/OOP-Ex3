@@ -39,6 +39,7 @@ class DiGraph(GraphInterface):
             return False
         self.edges[id1][id2] = weight
 
+
         # ======================= Add a new edge from id1 to id2 to outEdges dict -> set================================
         if id1 not in self.outEdges.keys():
             self.outEdges[id1] = dict()
@@ -80,7 +81,8 @@ class DiGraph(GraphInterface):
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
         if node_id1 not in self.edges.keys():
             return False
-        if node_id2 not in self.edges[node_id1].keys() or node_id1 not in self.nodes.keys() or node_id2 not in self.nodes.keys():
+        if node_id2 not in self.edges[
+            node_id1].keys() or node_id1 not in self.nodes.keys() or node_id2 not in self.nodes.keys():
             return False
         del self.edges[node_id1][node_id2]
         del self.outEdges[node_id1][node_id2]
@@ -105,3 +107,13 @@ class DiGraph(GraphInterface):
 
     def __repr__(self):
         return "Graph: |V|=" + str(self.NumberOfNodes) + " , |E|=" + str(self.NumberOfEdges)
+
+    def aux_neighbor_set(self, id: int):
+        setofneighbors = set()
+        if id in self.outEdges.keys():
+            for i in self.outEdges[id].keys():
+                setofneighbors.add(i)
+        if id in self.inComingEdges.keys():
+            for j in self.inComingEdges[id].keys():
+                setofneighbors.add(j)
+        return setofneighbors

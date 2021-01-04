@@ -25,8 +25,8 @@ def check():
         13. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
         14. [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]]
         """
-    check0()
-    check1()
+    # check0()
+    # check1()
     check2()
 
 
@@ -61,7 +61,7 @@ def check1():
     g_algo = GraphAlgo()  # init an empty graph - for the GraphAlgo
     file = "../data/T0.json"
     g_algo.load_from_json(file)  # init a GraphAlgo from a json file
-   # print("6. ", g_algo.connected_components())
+    print("6. ", g_algo.connected_components())
     print("7. ", g_algo.shortest_path(0, 3))
     print("8. ", g_algo.shortest_path(3, 1))
     g_algo.save_to_json(file + '_saved')
@@ -76,18 +76,26 @@ def check2():
     file = '../data/A5'
     g_algo.load_from_json(file)
     g_algo.get_graph().remove_edge(13, 14)
+    g_algo.plot_graph()
+    g2_algo = GraphAlgo()
+    file2 = '../data/A1'
+    g2_algo.load_from_json(file2)
 
-    g_algo.save_to_json(file + "_edited")
-    dist, path = g_algo.shortest_path(1, 7)
-    print("9.", dist, path)
-    dist, path = g_algo.shortest_path(47, 19)
-    print("10. ", dist, path)
-    dist, path = g_algo.shortest_path(20, 2)
-    print("11. ", dist, path)
-    dist, path = g_algo.shortest_path(2, 20)
-    print("12. ", dist, path)
-    #  print("13. ", g_algo.connected_component(0))
-    print("14. ", g_algo.connected_components())
+   # g2_algo.graph.add_edge(1,8,1)
+    #g2_algo.graph.add_edge(0,4,1)
+    #g2_algo.plot_graph()
+
+    # g_algo.save_to_json(file + "_edited")
+    # dist, path = g_algo.shortest_path(1, 7)
+    # print("9.", dist, path)
+    # dist, path = g_algo.shortest_path(47, 19)
+    # print("10. ", dist, path)
+    # dist, path = g_algo.shortest_path(20, 2)
+    # print("11. ", dist, path)
+    # dist, path = g_algo.shortest_path(2, 20)
+    # print("12. ", dist, path)
+    # print("13. ", g_algo.connected_component(0))
+    # print("14. ", g_algo.connected_components())
 
 
 # g_algo.plot_graph()
