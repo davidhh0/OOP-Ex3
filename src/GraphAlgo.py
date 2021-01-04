@@ -1,3 +1,4 @@
+import math
 from typing import List
 import json
 import numpy as np
@@ -7,6 +8,8 @@ from src.DiGraph import DiGraph
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.data import nodeDataEncoder
 from src.DFS import dfs
+import matplotlib.patheffects as pe
+
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -149,13 +152,21 @@ class GraphAlgo(GraphAlgoInterface):
         np.random.seed(555555)
         nodeIDtoCordinate = {}  # {id1: (x,y) , id2: (x,y) ...... }
         isNodeDrawn = {}  # {id1: True , id2: False...} true for a drawn node and false for a undrawn node
-        for i in self.graph.nodes.keys():
-            isNodeDrawn[i] = False
+        for key, value in self.graph.nodes.items():
+            if value.pos:
+                isNodeDrawn[key] = True
+                x = float(self.graph.nodes[key].pos.split(',')[0])
+                y = float(self.graph.nodes[key].pos.split(',')[1])
+                nodeIDtoCordinate[key] = (x, y)
+
+
+            else:
+                isNodeDrawn[key] = False
 
         for i in self.graph.nodes.keys():
             #  print(self.graph.aux_neighbor_set(i))
             if isNodeDrawn[i] is False:
-                x, y = np.random.normal(1000, 700, (1,))[0], np.random.normal(1000, 700, (1,))[0]
+                x, y = np.random.normal(35.1, 0.01, (1,))[0], np.random.normal(32.1, 0.01, (1,))[0]
                 # x,y = np.random.randint(0,1000) , np.random.randint(0,1000)
                 nodeIDtoCordinate[i] = (x, y)
                 isNodeDrawn[i] = True
@@ -163,41 +174,66 @@ class GraphAlgo(GraphAlgoInterface):
                 if isNodeDrawn[j] is False:
                     closeX = nodeIDtoCordinate[i][0]
                     closeY = nodeIDtoCordinate[i][1]
-                    x, y = np.random.normal(closeX, 150, (1,))[0], np.random.normal(closeY, 150, (1,))[0]
-                    if -100 < x - closeX < 100:
-                        x += 200
-                    if -100 < y - closeY < 100:
-                        y += 200
+                    x, y = np.random.normal(closeX, 0.005, (1,))[0], np.random.normal(closeY, 0.005, (1,))[0]
+                    if -0.0005 < x - closeX < 0.0005:
+                        x += 0.0008
+                    if -0.0005 < y - closeY < 0.0005:
+                        y += 0.0008
                     nodeIDtoCordinate[j] = (x, y)
                     isNodeDrawn[j] = True
-        # line, = ax.plot(1, 2, '-o', ms=10, lw=2, alpha=0.7, mfc='orange', color='blue')
+        # ============ Drawing nodes ===============
         for i in self.graph.nodes.keys():
             x = nodeIDtoCordinate[i][0]
             y = nodeIDtoCordinate[i][1]
-            ax.plot(x, y, '-o', ms=10, lw=2, alpha=0.7, mfc='orange')
-            plt.annotate('id: ' + str(i), (x, y), fontsize=10)
-
+            circle1 = plt.Circle((x, y), 0.0003, color='orange')
+            ax.add_artist(circle1)
+        # ============[F] Drawing nodes ===============
+        # ============ Drawing arrows + edges ===============
         for i in self.graph.edges.keys():
             for j in self.graph.edges[i].keys():
-                print('Edge from', str(i), ' to: ', str(j))
-                iFirst = nodeIDtoCordinate[i][0], nodeIDtoCordinate[j][0]
-                iSecond = nodeIDtoCordinate[i][1], nodeIDtoCordinate[j][1]
-                # ===========================
-                r = np.random.random()
-                b = np.random.random()
-                g = np.random.random()
-                color = (r, g, b)
-                ax.plot(iFirst, iSecond,c=color, alpha=0.7)
+                x, y = nodeIDtoCordinate[i][0], nodeIDtoCordinate[i][1]
+                x2, y2 = nodeIDtoCordinate[j][0], nodeIDtoCordinate[j][1]
+                headW = 0.0004
+                headL = 0.0004
+                r = 0.0003
+                dxy1 = math.dist([x, y], [x2, y2]) - r
+                if dxy1 < 0.002:
+                    headL = headL * 0.7
+                    headW = headW * 0.7
 
+                r = 0.0003 + headL + 0.00001
+
+                dxy = math.dist([x, y], [x2, y2]) - r
+                xp = (x * r + x2 * dxy) / (r + dxy)
+                yp = (y * r + y2 * dxy) / (r + dxy)
+
+                dx = xp - x
+                dy = yp - y
+
+                ax.arrow(x, y, dx, dy, in_layout=False, head_width=headW, alpha=0.85, head_length=headL, width=0.00001,
+                         fc='black',
+                         ec='black')
+        # ============[F] Drawing arrows + edges ===============
+
+        # ============ Drawing labels for each node ============
+        for i in self.graph.nodes.keys():
+            x = nodeIDtoCordinate[i][0]
+            y = nodeIDtoCordinate[i][1]
+            # plt.annotate(str(i), (x+0.0001, y+0.0001), fontsize=10,weight='bold')
+            plt.text(x+0.0001, y+0.0001,str(i), color='orange',fontsize=10,
+                     path_effects=[pe.withStroke(linewidth=1, foreground="black")]
+                     )
+        # ============[F] Drawing labels for each node ============
         fig.text(0.95, 0.89, 'David & Yuval',
                  fontsize=30, color='black',
                  ha='right', va='bottom', alpha=0.3)
         plt.show()
-        print('')
+
 
     def plot_graph(self) -> None:
-        print(self.graph)
-        if list(self.graph.nodes.values())[0].pos:
-            self.plot_nodes_with_pos()
-        else:
-            self.plot_nodes_without_pos()
+        self.plot_nodes_without_pos()
+
+        # if list(self.graph.nodes.values())[0].pos:
+        #     self.plot_nodes_with_pos()
+        # else:
+        #     self.plot_nodes_without_pos()

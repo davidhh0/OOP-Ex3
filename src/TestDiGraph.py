@@ -100,11 +100,12 @@ class MyTestCase(unittest.TestCase):
     def test_shortest_path(self):
         algo = GraphAlgo()
         algo.load_from_json("../data/A5")
-        print(algo.shortest_path(7, 7))
+        print(algo.shortest_path(0, 47))
 
     def test_plot_on_big_random_graph(self):
         g = create_graph_random()
         algo = GraphAlgo(g)
+       # algo.load_from_json("../data/A1_Broken")
         algo.plot_graph()
 
 

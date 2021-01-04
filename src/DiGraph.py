@@ -20,7 +20,11 @@ class DiGraph(GraphInterface):
         return self.NumberOfEdges
 
     def get_all_v(self) -> dict:
-        return list(self.nodes.values())
+        idict = {}
+        for i in self.nodes.keys():
+            idict[i] = "|edges out| " + str(len(self.all_out_edges_of_node(i))) + " |edges in| " + str(
+                len(self.all_in_edges_of_node(i)))
+        return idict
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if node_id in self.nodes.keys():
@@ -38,7 +42,6 @@ class DiGraph(GraphInterface):
         if id2 in self.edges[id1]:
             return False
         self.edges[id1][id2] = weight
-
 
         # ======================= Add a new edge from id1 to id2 to outEdges dict -> set================================
         if id1 not in self.outEdges.keys():
