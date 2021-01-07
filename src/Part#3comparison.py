@@ -18,17 +18,19 @@ class MyTestCaseForComparison(unittest.TestCase):
 
         # 10^2 nodes and ~~ 10^3 edges:
         n = 2
-        g = return_ten_n_graph_my(n)
-        algo = GraphAlgo(g)
-        src = random.randint(0, 10 ** n)
-        dest = random.randint(0, 10 ** n)
+        # g = return_ten_n_graph_my(n)
+        algo = GraphAlgo()
+        algo.load_from_json("../data/G_30000_240000_0.json")
+        g = algo.graph
+        src = random.randint(0, g.NumberOfNodes)
+        dest = random.randint(0, g.NumberOfNodes)
         startShortest = timer()
         algo.shortest_path(src, dest)
         endShortest = timer()
         startConnected = timer()
         algo.connected_components()
         endConnected = timer()
-        component = random.randint(0, 10 ** n)
+        component = random.randint(0, g.NumberOfNodes)
         startComponent = timer()
         algo.connected_component(component)
         endComponent = timer()
@@ -42,7 +44,7 @@ class MyTestCaseForComparison(unittest.TestCase):
               )
 
         ##################################################################################################
-        n = 4
+        n = 1
         g = return_ten_n_graph_my(n)
         algo = GraphAlgo(g)
         src = random.randint(0, 10 ** n)
@@ -69,7 +71,7 @@ class MyTestCaseForComparison(unittest.TestCase):
 
         #########################################################################################################
 
-        n = 4
+        n = 1
         g = return_ten_n_graph_my(n)
         algo = GraphAlgo(g)
         src = random.randint(0, 10 ** n)

@@ -89,13 +89,13 @@ class MyTestCase(unittest.TestCase):
 
     def test_dfs(self):
         algo = GraphAlgo()
-        print(algo.load_from_json("../data/A5"))
+        print(algo.load_from_json("../data/A1_BrokenA"))
         graph: DiGraph = algo.graph
         print(graph.NumberOfNodes)
         print(graph.NumberOfEdges)
-        #   print(algo.connected_component(0))
-        self.assertEqual(len(algo.connected_component(0)), 48)
-        self.assertEqual(len(algo.connected_components()), 1)
+        print(algo.connected_components())
+        # self.assertEqual(len(algo.connected_component(0)), 48)
+        # self.assertEqual(len(algo.connected_components()), 1)
 
     def test_shortest_path(self):
         algo = GraphAlgo()
