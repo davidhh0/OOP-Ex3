@@ -9,7 +9,7 @@ from src.GraphAlgoInterface import GraphAlgoInterface
 from src.data import nodeDataEncoder
 from src.DFS import dfs
 import matplotlib.patheffects as pe
-
+from heapq import heapify, heappush, heappop
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -84,6 +84,7 @@ class GraphAlgo(GraphAlgoInterface):
         visited = {}
         parent = {}
         PQ = []
+        heapify(PQ)
         sofi = None
 
         # Priority Queue will be : out = min(graph.nodes , key = get_tag)
@@ -92,11 +93,10 @@ class GraphAlgo(GraphAlgoInterface):
             node.tag = float('inf')
             visited[node.key] = False
         g.nodes[id1].tag = 0
-        PQ.append(g.nodes[id1])
+        heappush(PQ, g.nodes[id1])
         flag = True
         while len(PQ) > 0 and flag:
-            index = PQ.index(min(list(PQ), key=node_data.get_tag))
-            node: node_data = PQ.pop(index)
+            node = heappop(PQ)
             if node.key == id2:
                 sofi = node
                 flag = False
@@ -106,17 +106,17 @@ class GraphAlgo(GraphAlgoInterface):
                     distance = node.tag + g.edges[node.key][neig]
                     if distance < g.nodes[neig].tag:
                         g.nodes[neig].tag = distance
-                        parent[g.nodes[neig]] = node
-                        PQ.append(g.nodes[neig])
+                        parent[g.nodes[neig].key] = node
+                        heappush(PQ,g.nodes[neig])
         if sofi is None or sofi.key != id2:
             return float('inf'), []
         answer.append(g.nodes[id2].key)
         while True:
             if sofi.key == id1:
                 break
-            dad: node_data = parent[sofi]
+            dad: node_data = parent[sofi.key]
             answer.insert(0, dad.key)
-            sofi = parent[sofi]
+            sofi = parent[sofi.key]
 
         return g.nodes[id2].tag, answer
 
@@ -220,7 +220,7 @@ class GraphAlgo(GraphAlgoInterface):
             x = nodeIDtoCordinate[i][0]
             y = nodeIDtoCordinate[i][1]
             # plt.annotate(str(i), (x+0.0001, y+0.0001), fontsize=10,weight='bold')
-            plt.text(x+0.0001, y+0.0001,str(i), color='orange',fontsize=10,
+            plt.text(x + 0.0001, y + 0.0001, str(i), color='orange', fontsize=10,
                      path_effects=[pe.withStroke(linewidth=1, foreground="black")]
                      )
         # ============[F] Drawing labels for each node ============
@@ -228,7 +228,6 @@ class GraphAlgo(GraphAlgoInterface):
                  fontsize=30, color='black',
                  ha='right', va='bottom', alpha=0.3)
         plt.show()
-
 
     def plot_graph(self) -> None:
         self.plot_nodes_without_pos()

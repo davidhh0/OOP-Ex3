@@ -4,6 +4,8 @@ from src.data import node_data
 import timeit
 from src.DiGraph import DiGraph
 from src.GraphAlgo import GraphAlgo
+from heapq import heapify, heappush, heappop
+
 
 
 class MyTestCase(unittest.TestCase):
@@ -107,6 +109,25 @@ class MyTestCase(unittest.TestCase):
         algo = GraphAlgo(g)
        # algo.load_from_json("../data/A1_Broken")
         algo.plot_graph()
+    def test_check_PQ(self):
+        g = DiGraph()
+        node1 = node_data(5)
+        node2 = node_data(50)
+        node1.tag=5
+        node2.tag=50
+        node3 = node_data(25)
+        node3.tag = 25
+        node4 = node_data(25)
+        node4.tag = 25
+        pq =[]
+        heapify(pq)
+        heappush(pq,node3)
+        heappush(pq, node2)
+        heappush(pq, node1)
+        heappush(pq, node4)
+
+        print(pq)
+
 
 
 def create_graph_random():
