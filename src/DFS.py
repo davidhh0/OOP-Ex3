@@ -88,10 +88,12 @@ class dfs:
         self.dfs_colorMap[u] = 'gray'
         self.dfs_time += 1
         self.dfs_start[u] = self.dfs_time
-        for i in self.graph.inComingEdges[u].keys():
-            if self.dfs_colorMap[i] == 'white':
-                self.dfs_parent[i] = u
-                self.dfs_visit_transpose(i)
+        value = self.graph.inComingEdges.get(u)
+        if value is not None:
+            for i in self.graph.inComingEdges[u].keys():
+                if self.dfs_colorMap[i] == 'white':
+                    self.dfs_parent[i] = u
+                    self.dfs_visit_transpose(i)
         self.dfs_colorMap[u] = 'black'
         self.dfs_time += 1
         self.dfs_finish_transpose[u] = self.dfs_time
