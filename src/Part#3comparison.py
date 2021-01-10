@@ -2,13 +2,10 @@ import json
 import sys
 import unittest
 import random
-from src.data import node_data
 import networkx as nx
 from timeit import default_timer as timer
-import time
 from src.DiGraph import DiGraph
 from src.GraphAlgo import GraphAlgo
-from networkx.readwrite import json_graph
 
 
 class MyTestCaseForComparison(unittest.TestCase):
@@ -110,6 +107,8 @@ def time_test_networkx(g: nx.DiGraph):
 
     src = random.randint(0, g.number_of_nodes())
     dest = random.randint(0, g.number_of_nodes())
+
+    print("SRC : ", src, ", DEST : ", dest)
     startShortest = timer()
     nx.shortest_path(g, source=src, target=dest, method='dijkstra', weight='weight')
     endShortest = timer()

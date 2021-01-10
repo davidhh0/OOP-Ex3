@@ -107,7 +107,7 @@ class GraphAlgo(GraphAlgoInterface):
                     if distance < g.nodes[neig].tag:
                         g.nodes[neig].tag = distance
                         parent[g.nodes[neig].key] = node
-                        heappush(PQ,g.nodes[neig])
+                        heappush(PQ, g.nodes[neig])
         if sofi is None or sofi.key != id2:
             return float('inf'), []
         answer.append(g.nodes[id2].key)
@@ -121,13 +121,11 @@ class GraphAlgo(GraphAlgoInterface):
         return g.nodes[id2].tag, answer
 
     def connected_component(self, id1: int) -> list:
-        if self.graph is None or id1 not in self.graph.nodes.keys():
+        if self.graph is None or id1 not in self.graph.nodes:
             return []
         run = dfs(self.graph)
-        run.connected_components()
-        for i in run.list:
-            if id1 in i:
-                return i
+        run.connected_component_for_given_node(id1)
+        return run.list
 
     def connected_components(self) -> List[list]:
         if self.graph is None:
@@ -204,6 +202,9 @@ class GraphAlgo(GraphAlgoInterface):
                 r = 0.0003 + headL + 0.00001
 
                 dxy = math.dist([x, y], [x2, y2]) - r
+                if (r + dxy) == 0:
+                    r = 2
+                    dxy = -1
                 xp = (x * r + x2 * dxy) / (r + dxy)
                 yp = (y * r + y2 * dxy) / (r + dxy)
 

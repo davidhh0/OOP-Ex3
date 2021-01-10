@@ -1,3 +1,4 @@
+import collections
 import unittest
 import random
 from src.data import node_data
@@ -7,21 +8,7 @@ from src.GraphAlgo import GraphAlgo
 from heapq import heapify, heappush, heappop
 
 
-
 class MyTestCase(unittest.TestCase):
-    def test_priority_tags(self):
-        # Priority Queue will be : out = min(graph.nodes , key = get_tag)
-        g = DiGraph()
-        for i in range(10):
-            g.add_node(i)
-            g.nodes[i].tag = random.randint(1, 100)
-        PQ = []
-        for node in g.nodes.values():
-            PQ.append(node)
-        while len(PQ) > 0:
-            index = PQ.index(min(list(PQ), key=node_data.get_tag))
-            node: node_data = PQ.pop(index)
-            print(node.tag)
 
     def test_nodesize(self):
         g = create_graph_random()
@@ -32,10 +19,9 @@ class MyTestCase(unittest.TestCase):
         g = create_graph(10, 20)
         g.add_edge(0, 1, 20)
         self.assertEqual(g.NumberOfEdges, 21)
-        print("Okay21")
+
         if g.remove_edge(0, 1):
             self.assertEqual(g.NumberOfEdges, 20)
-            print("Okay20")
 
         g.add_node(100)
         g.add_node(101)
@@ -54,10 +40,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_algo_load(self):
         algo = GraphAlgo()
-        print(algo.load_from_json("Data.json"))
+        algo.load_from_json("../data/A1_BrokenA")
         graph: DiGraph = algo.graph
-        print(graph.NumberOfNodes)
-        print(graph.NumberOfEdges)
+        self.assertEqual(graph.NumberOfNodes, 17)
+        self.assertEqual(graph.NumberOfEdges, 19)
 
     def test_algo_save(self):
         algo = GraphAlgo()
@@ -65,6 +51,7 @@ class MyTestCase(unittest.TestCase):
         algo.save_to_json("Data.json")
 
     def test_big_dfs(self):
+        # Checking if there is an exception at some scenario
         algo = GraphAlgo()
         algo.load_from_json("../data/A5")
         random.seed(55555)
@@ -74,12 +61,12 @@ class MyTestCase(unittest.TestCase):
             algo.graph.remove_edge(b, c)
             algo.graph.remove_edge(c, b)
         for i in algo.graph.nodes.keys():
-            print(algo.connected_component(i))
+            algo.connected_component(i)
 
     def test_big_dijkstra(self):
+        # Checking if there is an exception at some scenario
         algo = GraphAlgo()
         algo.load_from_json("../data/A5")
-        print(list(algo.graph.nodes.keys()))
         for i in algo.graph.nodes.keys():
             for j in algo.graph.nodes.keys():
                 x = algo.shortest_path(i, j)
@@ -87,47 +74,61 @@ class MyTestCase(unittest.TestCase):
     def test_empty_list(self):
         g = DiGraph()
         g.add_node(1)
-        print(g.all_in_edges_of_node(1))
+        self.assertEqual(g.all_in_edges_of_node(1), {})
 
     def test_dfs(self):
         algo = GraphAlgo()
-        print(algo.load_from_json("../data/A1_BrokenA"))
+        algo.load_from_json("../data/G_1000_8000_0.json")
         graph: DiGraph = algo.graph
-        print(graph.NumberOfNodes)
-        print(graph.NumberOfEdges)
         print(algo.connected_components())
-        # self.assertEqual(len(algo.connected_component(0)), 48)
-        # self.assertEqual(len(algo.connected_components()), 1)
+        print(algo.connected_component(11))
+        # self.assertEqual(len(algo.connected_component(0)), 4)
+        # self.assertEqual(len(algo.connected_components()), 10)
+
+    def test_connected_componenT(self):
+        algo = GraphAlgo()
+        algo.load_from_json("../data/G_30000_240000_0.json")
+        u = random.randint(0, 30000)
+        list = algo.connected_components()
+        wantedlist = []
+        for i in list:
+            if u in i:
+                wantedlist = i
+                break
+        listA = algo.connected_component(u)
+        self.assertEqual(collections.Counter(listA),collections.Counter(wantedlist))
 
     def test_shortest_path(self):
         algo = GraphAlgo()
         algo.load_from_json("../data/A5")
-        print(algo.shortest_path(0, 47))
+        algo.shortest_path(0, 47)
 
     def test_plot_on_big_random_graph(self):
         g = create_graph_random()
         algo = GraphAlgo(g)
-       # algo.load_from_json("../data/A1_Broken")
+
+        algo.load_from_json("../data/A1_BrokenA")
         algo.plot_graph()
+
     def test_check_PQ(self):
         g = DiGraph()
         node1 = node_data(5)
         node2 = node_data(50)
-        node1.tag=5
-        node2.tag=50
+        node1.tag = 5
+        node2.tag = 50
         node3 = node_data(25)
         node3.tag = 25
         node4 = node_data(25)
         node4.tag = 25
-        pq =[]
+        pq = []
         heapify(pq)
-        heappush(pq,node3)
+        heappush(pq, node3)
         heappush(pq, node2)
         heappush(pq, node1)
         heappush(pq, node4)
-
-        print(pq)
-
+        self.assertEqual(heappop(pq).key, 5)
+        self.assertEqual(heappop(pq).key, 25)
+        self.assertEqual(heappop(pq).key, 25)
 
 
 def create_graph_random():
