@@ -145,18 +145,29 @@ class GraphAlgo(GraphAlgoInterface):
             ax.plot(x, y, '-o', ms=10, lw=2, alpha=0.7, mfc='orange')
         plt.show()
 
+    import math
+    def distance(self,p1, p2):
+        return math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
+
+    def closest(self, pt, others):
+        return min(others, key=lambda i: self.distance(pt, i))
+
+    def avgDistance(self, pt, others):
+        dists = [self.distance(pt, i) for i in others]
+        return sum(dists) / len(dists)
     def plot_nodes_without_pos(self):
         fig, ax = plt.subplots()
         np.random.seed(555555)
         nodeIDtoCordinate = {}  # {id1: (x,y) , id2: (x,y) ...... }
         isNodeDrawn = {}  # {id1: True , id2: False...} true for a drawn node and false for a undrawn node
+
+
         for key, value in self.graph.nodes.items():
             if value.pos:
                 isNodeDrawn[key] = True
                 x = float(self.graph.nodes[key].pos.split(',')[0])
                 y = float(self.graph.nodes[key].pos.split(',')[1])
                 nodeIDtoCordinate[key] = (x, y)
-
 
             else:
                 isNodeDrawn[key] = False
@@ -172,18 +183,40 @@ class GraphAlgo(GraphAlgoInterface):
                 if isNodeDrawn[j] is False:
                     closeX = nodeIDtoCordinate[i][0]
                     closeY = nodeIDtoCordinate[i][1]
-                    x, y = np.random.normal(closeX, 0.005, (1,))[0], np.random.normal(closeY, 0.005, (1,))[0]
-                    if -0.0005 < x - closeX < 0.0005:
-                        x += 0.0008
-                    if -0.0005 < y - closeY < 0.0005:
-                        y += 0.0008
+                    list_pos = []
+                    for k in self.graph.aux_neighbor_set(i):
+                        if isNodeDrawn[k] is True and nodeIDtoCordinate[k][0] != closeX and nodeIDtoCordinate[k][1] != closeY:
+                            list_pos.append((nodeIDtoCordinate[k][0], nodeIDtoCordinate[k][1]))
+                    if(len(list_pos)>0):
+                        closted = self.closest((closeX,closeY), list_pos)
+                        deist = self.distance(closted,nodeIDtoCordinate[i])
+                        #deist = self.avgDistance((closeX,closeY), list_pos)
+                    else:
+                        deist=0.005
+                    x, y = np.random.normal(closeX, deist, (1,))[0], np.random.normal(closeY, deist, (1,))[0]
+
+
+                    if (-0.01)*deist < x - closeX < 0.01*deist:
+                        x += 0.001*deist
+                    if (-0.01)*deist < y - closeY < 0.01*deist:
+                        y += 0.001*deist
+
                     nodeIDtoCordinate[j] = (x, y)
                     isNodeDrawn[j] = True
         # ============ Drawing nodes ===============
+        list_pos = []
+        deist=0
+        for k in self.graph.aux_neighbor_set(i):
+            if isNodeDrawn[k] is True and nodeIDtoCordinate[k][0] != closeX and nodeIDtoCordinate[k][1] != closeY:
+                list_pos.append((nodeIDtoCordinate[k][0], nodeIDtoCordinate[k][1]))
+        if (len(list_pos) > 0):
+            closted = self.closest((closeX, closeY), list_pos)
+            deist = self.distance(closted, nodeIDtoCordinate[i])
         for i in self.graph.nodes.keys():
+
             x = nodeIDtoCordinate[i][0]
             y = nodeIDtoCordinate[i][1]
-            circle1 = plt.Circle((x, y), 0.0003, color='orange')
+            circle1 = plt.Circle((x, y), deist*0.04, color='orange')
             ax.add_artist(circle1)
         # ============[F] Drawing nodes ===============
         # ============ Drawing arrows + edges ===============
@@ -193,13 +226,13 @@ class GraphAlgo(GraphAlgoInterface):
                 x2, y2 = nodeIDtoCordinate[j][0], nodeIDtoCordinate[j][1]
                 headW = 0.0004
                 headL = 0.0004
-                r = 0.0003
+                r = deist*0.04
                 dxy1 = math.dist([x, y], [x2, y2]) - r
                 if dxy1 < 0.002:
                     headL = headL * 0.7
                     headW = headW * 0.7
 
-                r = 0.0003 + headL + 0.00001
+                r = deist*0.04 + headL + 0.00001
 
                 dxy = math.dist([x, y], [x2, y2]) - r
                 if (r + dxy) == 0:
