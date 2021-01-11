@@ -10,8 +10,8 @@ This project is about graph theory in Python. One of the main purposes of this p
  - Interfaces:
 	 GraphInterface.py 
 	 GraphAlgoInferface.py
- - Python classes:
-	 DiGraph.py
+ - Python classes: \n
+	 DiGraph.py \n
 	 data.py
 	 GraphAlgo.py
 	 DFS.py
