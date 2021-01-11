@@ -8,6 +8,13 @@ from src.GraphAlgo import GraphAlgo
 
 
 class MyTestCaseForComparison(unittest.TestCase):
+    """
+        This class computes the time elapsed for DiGraph algorithms and NetworkX for:
+        shortest path
+        connected components
+        connected component
+    """
+
     shortestPathSumDiGraph = 0
     shortestPathSumNetworX = 0
 

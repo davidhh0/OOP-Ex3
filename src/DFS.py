@@ -2,7 +2,9 @@ from src.DiGraph import DiGraph
 
 
 class dfs:
-
+    """
+        This class implements Depth-first Search for a directed weighted graph.
+    """
     def __init__(self, g: DiGraph):
         self.graph: DiGraph = g
         self.dfs_colorMap = {}
@@ -15,18 +17,30 @@ class dfs:
         self.greenCount = 0
 
     def connected_components(self, trans=False):
+        """
+            This function is the base for determining the connected components
+            The first time it runs DFS on out edges and the second time it runs DFS on in coming edges.
+        """
         if trans:
             self.dfs_transpose_run()
         else:
             self.dfs_run()
 
     def connected_component_for_given_node(self, node: int, trans=False):
+        """
+            This function is the base for determining the connected component
+            The first time it runs DFS on out edges and the second time it runs DFS on in coming edges.
+        """
         if trans:
             self.dfs_transpose_run_given_id(node)
         else:
             self.dfs_run(node)
 
     def dfs_transpose_run_given_id(self, id: int):
+        """
+            This method run BFS on the potential nodes that discovered during the first DFS
+            potential node: all the nodes that have a path from the given id to them.
+        """
         # Let list be the list of nodes in the dfs_start
         # We have the given ID
         # NOW we check that the ID is reachable from evey node from the list
@@ -49,6 +63,11 @@ class dfs:
                 self.list.append(i)
 
     def dfs_transpose_run(self, id: int = None):
+        """
+            This method runs an iterative DFS transpose as long as the finish time dictionary data structure
+            is not empty.
+            Meaning that we run the transpose DFS (all in coming edges)
+        """
         self.dfs_start.clear()
         self.dfs_finish_transpose.clear()
         self.dfs_parent.clear()
@@ -72,6 +91,10 @@ class dfs:
             self.connected_components()
 
     def dfs_run(self, node: int = None):
+        """
+            This method runs DFS on every node and paints the visited nodes as "black" and the unvisited
+            ones remain "white".
+        """
         self.dfs_start.clear()
         self.dfs_finish.clear()
         self.dfs_parent.clear()
@@ -97,21 +120,11 @@ class dfs:
         else:
             self.connected_component_for_given_node(node, True)
 
-    def dfs_visit(self, u):
-        self.dfs_colorMap[u] = 'gray'
-        self.dfs_time += 1
-        self.dfs_start[u] = self.dfs_time
-        for i in self.graph.edges[u].keys():
-            if i in self.dfs_colorMap.keys():
-                if self.dfs_colorMap[i] == 'white':
-                    self.dfs_parent[i] = u
-                    self.dfs_colorMap[i] = 'gray'
-                    self.dfs_visit(i)
-        self.dfs_colorMap[u] = 'black'
-        self.dfs_time += 1
-        self.dfs_finish.append((u, self.dfs_time))
 
     def dfs_visit_iterative(self, u):
+        """
+
+        """
         lst = []
         node_tup = [u, -1]
         lst.append(node_tup)
@@ -182,6 +195,9 @@ class dfs:
                 lst.pop(0)
 
     def get_components(self):
+        """
+            Adding to the main list the list of the "black" nodes.
+        """
         # Run through colorMap and for each black one add it to the list and color it green
         conList = []
         for i in self.dfs_colorMap.keys():

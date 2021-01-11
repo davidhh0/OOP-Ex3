@@ -22,7 +22,6 @@ def iplot():
     ax.legend()
 
     def autolabel(rects):
-        """Attach a text label above each bar in *rects*, displaying its height."""
         for rect in rects:
             height = rect.get_height()
             ax.annotate('{}'.format(height),
