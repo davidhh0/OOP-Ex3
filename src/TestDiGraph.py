@@ -107,7 +107,7 @@ class MyTestCase(unittest.TestCase):
         g = create_graph_random()
         algo = GraphAlgo(g)
 
-        algo.load_from_json("../data/A1_BrokenA")
+        algo.load_from_json("../data/G_10_80_0.json")
         algo.plot_graph()
 
     def test_check_PQ(self):

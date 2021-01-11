@@ -160,6 +160,7 @@ class GraphAlgo(GraphAlgoInterface):
 
             else:
                 isNodeDrawn[key] = False
+        
 
         for i in self.graph.nodes.keys():
             #  print(self.graph.aux_neighbor_set(i))

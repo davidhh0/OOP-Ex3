@@ -1,5 +1,4 @@
 import json
-import sys
 import unittest
 import random
 import networkx as nx
@@ -9,8 +8,17 @@ from src.GraphAlgo import GraphAlgo
 
 
 class MyTestCaseForComparison(unittest.TestCase):
+    shortestPathSumDiGraph = 0
+    shortestPathSumNetworX = 0
+
+    connectedComponentsDiGraph = 0
+    connectedComponentsNetworkX = 0
+
+    connectedComponenTDiGraph = 0
+    connectedComponenTNetworkX = 0
 
     def test_return_graph_my(self):
+        self.shortestPathSumDiGraph = 0
         list = ["G_10_80_0.json", "G_100_800_0.json", "G_1000_8000_0.json", "G_10000_80000_0.json"
             , "G_20000_160000_0.json", "G_30000_240000_0.json"]
         for i in list:
@@ -19,11 +27,29 @@ class MyTestCaseForComparison(unittest.TestCase):
             time_test(g.graph)
 
     def test_time_networkx_for_all(self):
+        self.shortestPathSumNetworkX = 0
         list = ["G_10_80_0.json", "G_100_800_0.json", "G_1000_8000_0.json", "G_10000_80000_0.json"
             , "G_20000_160000_0.json", "G_30000_240000_0.json"]
         for i in list:
             g = return_graph_from_json_networkx(i)
             time_test_networkx(g)
+            if i == "G_30000_240000_0.json":
+                print("DiGraph: Average time for ShortestPath:", str(MyTestCaseForComparison.shortestPathSumDiGraph / 6)
+                      , "\n Average time for Connected Components: ",
+                      str(MyTestCaseForComparison.connectedComponentsDiGraph / 6)
+                      , "\n Average time for Connected Component: ",
+                      str(MyTestCaseForComparison.connectedComponenTDiGraph / 6)
+
+                      )
+                print("NetworkX: Average time for ShortestPath:",
+                      str(MyTestCaseForComparison.shortestPathSumNetworX / 6)
+                      , "\n Average time for Connected Components: ",
+                      str(MyTestCaseForComparison.connectedComponentsNetworkX / 6)
+                      , "\n Average time for Connected Component: ",
+                      str(MyTestCaseForComparison.connectedComponenTNetworkX / 6)
+
+                      )
+                print("Components networkX: ", MyTestCaseForComparison.connectedComponentsNetworkX)
 
     def test_separate(self):
         print("=============================================================== \n")
@@ -100,6 +126,9 @@ def time_test(g: DiGraph):
           (endConnected - startConnected), "\n",
           "Connected Component:",
           (endComponent - startComponent), "\n")
+    MyTestCaseForComparison.shortestPathSumDiGraph += (endShortest - startShortest)
+    MyTestCaseForComparison.connectedComponentsDiGraph += (endConnected - startConnected)
+    MyTestCaseForComparison.connectedComponenTDiGraph += (endComponent - startComponent)
 
 
 def time_test_networkx(g: nx.DiGraph):
@@ -128,6 +157,10 @@ def time_test_networkx(g: nx.DiGraph):
           "Connected Component:",
           (endComponent - startComponent), "\n"
           )
+    MyTestCaseForComparison.shortestPathSumNetworX += (endShortest - startShortest)
+    MyTestCaseForComparison.connectedComponenTNetworkX += (endComponent - startComponent)
+    MyTestCaseForComparison.connectedComponentsNetworkX += (endConnected - startConnected)
+
 
 
 if __name__ == '__main__':

@@ -34,9 +34,3 @@ class nodeDataEncoder(JSONEncoder):
         return o.__dict__
 
 
-class edge_data:
-
-    def __init__(self, src: int, dest: int, weight: float):
-        self.src = src
-        self.dest = dest
-        self.weight = weight
