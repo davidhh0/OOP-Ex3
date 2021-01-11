@@ -8,16 +8,16 @@ This project is about graph theory in Python. One of the main purposes of this p
  - includes many graphs as Json files in order to load/save them.
 #### directory (src):
  - Interfaces:
-	 GraphInterface.py 
+	 GraphInterface.py, 
 	 GraphAlgoInferface.py
- - Python classes: \n
-	 DiGraph.py \n
-	 data.py
-	 GraphAlgo.py
-	 DFS.py
-	 Ex3_main.py
-	 comparison.py
-	 PlottingTheComparison.py
+ - Python classes: 
+	 DiGraph.py, 
+	 data.py, 
+	 GraphAlgo.py, 
+	 DFS.py, 
+	 Ex3_main.py, 
+	 comparison.py, 
+	 PlottingTheComparison.py, 
 	 TestDiGraph.py
 	 
 
