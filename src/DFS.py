@@ -123,6 +123,12 @@ class dfs:
 
     def dfs_visit_iterative(self, u):
         """
+        This function doing iterative dfs for given id. For each node generated tuple of (<id>,-1) when the first
+        element represents the id and the second represents the number of neighbors this node has visited already,
+        initialized with the value -1. For each node we visit we create for it a tuple and adding to the stack and
+        coloring it with gray color. While the stack isn't empty we pop the first from the stack and foreach it's
+        neighbors it increasing the number of neighbors it visited already. if the total number of neighbors equals to
+        the number of neighbors already visited we color it black.
 
         """
         lst = []
@@ -153,6 +159,15 @@ class dfs:
                 lst.pop(0)
 
     def dfs_visit_transpose_iterative(self, u):
+        """
+        This function doing iterative dfs for given id. For each node generated tuple of (<id>,-1) when the first
+        element represents the id and the second represents the number of neighbors this node has visited already,
+        initialized with the value -1. For each node we visit we create for it a tuple and adding to the stack and
+        coloring it with gray color. While the stack isn't empty we pop the first from the stack and foreach it's
+        neighbors it increasing the number of neighbors it visited already. if the total number of neighbors equals to
+        the number of neighbors already visited we color it black.
+
+        """
         lst = []
         node_tup = [u, -1]
         lst.append(node_tup)

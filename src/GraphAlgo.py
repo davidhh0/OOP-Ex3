@@ -13,6 +13,7 @@ from heapq import heapify, heappush, heappop
 
 
 class GraphAlgo(GraphAlgoInterface):
+
     def get_graph(self):
         return self.graph
 
@@ -26,6 +27,14 @@ class GraphAlgo(GraphAlgoInterface):
         self.dfs_time = 0
 
     def load_from_json(self, file_name: str) -> bool:
+
+        """
+        This method gets a path to json file and parse it to graph.
+        Create an empty graph, and adding all the nodes from the json file.
+        At last adding all edges.
+        returns true if succeeded else false
+
+        """
         file_dict = None
         with open(file_name, 'r') as File:
             file_dict = json.loads(File.read())
@@ -47,6 +56,13 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def save_to_json(self, file_name: str) -> bool:
+
+        """
+            This method generate json file from graph and save it in the given path.
+            For each node create a simple dictionary with key and pos, for each edge create dictionary with
+            source , destination , weight and adding them to the list.
+            for last save the json file to the given path.
+        """
         try:
 
             nodes_str: dict = json.loads(nodeDataEncoder().encode(self.graph.nodes))
@@ -78,9 +94,12 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
-        """ This method calculates the shortest path from id1 to id2 using Dijkstra's algorithm.
+        """
+            This method calculates the shortest path from id1 to id2 using Dijkstra's algorithm.
             The priority queue is implemented by a min heap so at any poll of the queue, the node with
             the smallest tag value will be popped.
+            returns true if succeeded else false
+
         """
         if id1 not in self.graph.nodes.keys() or id2 not in self.graph.nodes.keys():
             return float('inf'), []
