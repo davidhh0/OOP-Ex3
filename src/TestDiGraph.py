@@ -96,7 +96,8 @@ class MyTestCase(unittest.TestCase):
                 wantedlist = i
                 break
         listA = algo.connected_component(u)
-        self.assertEqual(collections.Counter(listA),collections.Counter(wantedlist))
+        self.assertEqual(collections.Counter(listA), collections.Counter(wantedlist))
+
 
     def test_shortest_path(self):
         algo = GraphAlgo()
@@ -107,7 +108,7 @@ class MyTestCase(unittest.TestCase):
         g = create_graph_random()
         algo = GraphAlgo(g)
 
-        algo.load_from_json("../data/G_10_80_0.json")
+        algo.load_from_json("../data/A5")
         algo.plot_graph()
 
     def test_check_PQ(self):
@@ -144,6 +145,7 @@ def create_graph_random():
 
 
 def create_graph(nodeSize, edgeSize):
+    random.seed(555555)
     g = DiGraph()
     for i in range(nodeSize):
         g.add_node(i)

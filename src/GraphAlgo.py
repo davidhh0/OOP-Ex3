@@ -173,7 +173,8 @@ class GraphAlgo(GraphAlgoInterface):
 
             else:
                 isNodeDrawn[key] = False
-
+        closeX=float('inf')
+        closeY=float('inf')
         for i in self.graph.nodes.keys():
             #  print(self.graph.aux_neighbor_set(i))
             if isNodeDrawn[i] is False:
@@ -209,7 +210,7 @@ class GraphAlgo(GraphAlgoInterface):
         list_pos = []
         deist = 0
         for k in self.graph.aux_neighbor_set(i):
-            if isNodeDrawn[k] is True and nodeIDtoCordinate[k][0] != closeX and nodeIDtoCordinate[k][1] != closeY:
+            if closeX is  not float('inf') and closeY is not float('inf') and isNodeDrawn[k] is True and nodeIDtoCordinate[k][0] != closeX and nodeIDtoCordinate[k][1] != closeY:
                 list_pos.append((nodeIDtoCordinate[k][0], nodeIDtoCordinate[k][1]))
         if (len(list_pos) > 0):
             closted = self.closest((closeX, closeY), list_pos)
