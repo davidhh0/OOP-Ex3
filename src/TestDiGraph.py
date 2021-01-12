@@ -1,10 +1,10 @@
 import collections
 import unittest
 import random
-from data import node_data
+from src.data import node_data
 import timeit
-from DiGraph import DiGraph
-from GraphAlgo import GraphAlgo
+from src.DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
 from heapq import heapify, heappush, heappop
 
 

@@ -1,6 +1,6 @@
 import sys
-from DiGraph import DiGraph
-from GraphAlgo import GraphAlgo
+from src.DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
 
 def check():
     """
