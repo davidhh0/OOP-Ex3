@@ -1,5 +1,5 @@
-from src.GraphInterface import GraphInterface
-import src.data as data
+from GraphInterface import GraphInterface
+import data as data
 
 
 class DiGraph(GraphInterface):

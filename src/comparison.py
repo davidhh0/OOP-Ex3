@@ -3,8 +3,8 @@ import unittest
 import random
 import networkx as nx
 from timeit import default_timer as timer
-from src.DiGraph import DiGraph
-from src.GraphAlgo import GraphAlgo
+from DiGraph import DiGraph
+from GraphAlgo import GraphAlgo
 
 
 class MyTestCaseForComparison(unittest.TestCase):

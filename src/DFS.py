@@ -1,4 +1,4 @@
-from src.DiGraph import DiGraph
+from DiGraph import DiGraph
 
 
 class dfs:
