@@ -3,10 +3,10 @@ from typing import List
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from src.data import node_data
+from src.nodedata import node_data
 from src.DiGraph import DiGraph
 from src.GraphAlgoInterface import GraphAlgoInterface
-from src.data import nodeDataEncoder
+from src.nodedata import nodeDataEncoder
 from src.DFS import dfs
 import matplotlib.patheffects as pe
 from heapq import heapify, heappush, heappop

@@ -1,7 +1,7 @@
 import collections
 import unittest
 import random
-from src.data import node_data
+from src.nodedata import node_data
 import timeit
 from src.DiGraph import DiGraph
 from src.GraphAlgo import GraphAlgo

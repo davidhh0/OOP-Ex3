@@ -1,8 +1,4 @@
-""" this class represents a node in a graph """
-import json
-from filecmp import cmp
 from json import JSONEncoder
-
 
 class node_data:
     """

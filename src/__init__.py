@@ -1,5 +1,5 @@
 from comparison import *
-from src.data import *
+from nodedata import *
 from DFS import *
 from DiGraph import *
 from GraphAlgo import *
