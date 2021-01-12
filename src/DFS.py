@@ -123,6 +123,12 @@ class dfs:
 
     def dfs_visit_iterative(self, u):
         """
+        This function doing iterative dfs for given id. For each node generated tuple of (<id>,-1) when the first
+        element represents the id and the second represents the number of neighbors this node has visited already,
+        initialized with the value -1. For each node we visit we create for it a tuple and adding to the stack and
+        coloring it with gray color. While the stack isn't empty we pop the first from the stack and foreach it's
+        neighbors it increasing the number of neighbors it visited already. if the total number of neighbors equals to
+        the number of neighbors already visited we color it black.
 
         """
         lst = []
@@ -152,21 +158,17 @@ class dfs:
                 self.dfs_finish.append((node_t[0], self.dfs_time))
                 lst.pop(0)
 
-    def dfs_visit_transpose(self, u):
-        self.dfs_colorMap[u] = 'gray'
-        self.dfs_time += 1
-        self.dfs_start[u] = self.dfs_time
-        value = self.graph.inComingEdges.get(u)
-        if value is not None:
-            for i in self.graph.inComingEdges[u].keys():
-                if self.dfs_colorMap[i] == 'white':
-                    self.dfs_parent[i] = u
-                    self.dfs_visit_transpose(i)
-        self.dfs_colorMap[u] = 'black'
-        self.dfs_time += 1
-        self.dfs_finish_transpose[u] = self.dfs_time
 
     def dfs_visit_transpose_iterative(self, u):
+        """
+        This function doing iterative dfs for given id. For each node generated tuple of (<id>,-1) when the first
+        element represents the id and the second represents the number of neighbors this node has visited already,
+        initialized with the value -1. For each node we visit we create for it a tuple and adding to the stack and
+        coloring it with gray color. While the stack isn't empty we pop the first from the stack and foreach it's
+        neighbors it increasing the number of neighbors it visited already. if the total number of neighbors equals to
+        the number of neighbors already visited we color it black.
+
+        """
         lst = []
         node_tup = [u, -1]
         lst.append(node_tup)
