@@ -149,16 +149,24 @@ class GraphAlgo(GraphAlgoInterface):
 
     import math
     def distance(self, p1, p2):
+        """
+            returns distance between two points.
+        """
         return math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
 
     def closest(self, pt, others):
+        """
+        returns the minimum distance between pt to others list.
+        """
         return min(others, key=lambda i: self.distance(pt, i))
 
-    def avgDistance(self, pt, others):
-        dists = [self.distance(pt, i) for i in others]
-        return sum(dists) / len(dists)
 
     def plot_nodes(self):
+        """
+            This method draws the graph using matplotlib.
+            In case there is a position for a node , it draws it accordingly, otherwise, it draws the node
+            relatively close to it's neighbors and the other nodes in the graph.
+        """
         fig, ax = plt.subplots()
         np.random.seed(555555)
         nodeIDtoCordinate = {}  # {id1: (x,y) , id2: (x,y) ...... }
@@ -267,11 +275,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def plot_graph(self) -> None:
         """
-            plotting the
+            plots the graph using matplotlib.
+            for further information, see self.plot_nodes.
         """
         self.plot_nodes()
-
-        # if list(self.graph.nodes.values())[0].pos:
-        #     self.plot_nodes_with_pos()
-        # else:
-        #     self.plot_nodes_without_pos()

@@ -169,11 +169,5 @@ def time_test_networkx(g: nx.DiGraph):
     MyTestCaseForComparison.connectedComponentsNetworkX += (endConnected - startConnected)
 
 
-
 if __name__ == '__main__':
     unittest.main()
-
-    # Shortest Path:
-    #     python time: 0.0001590251922607422
-    #     java time:   0.0022536
-    #     networkX time: 0.0006301403045654297
