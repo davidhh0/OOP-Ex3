@@ -3,8 +3,8 @@ import unittest
 import random
 import networkx as nx
 from timeit import default_timer as timer
-from DiGraph import DiGraph
-from GraphAlgo import GraphAlgo
+from src.DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
 
 
 class MyTestCaseForComparison(unittest.TestCase):
@@ -30,7 +30,7 @@ class MyTestCaseForComparison(unittest.TestCase):
             , "G_20000_160000_0.json", "G_30000_240000_0.json"]
         for i in list:
             g = GraphAlgo()
-            g.load_from_json("../data/" + i)
+            g.load_from_json("data/" + i)
             time_test(g.graph)
 
     def test_time_networkx_for_all(self):
@@ -63,7 +63,7 @@ class MyTestCaseForComparison(unittest.TestCase):
 
 
 def return_graph_from_json_networkx(str) -> nx.DiGraph:
-    with open("../data/" + str) as g:
+    with open("data/" + str) as g:
         json_data = json.loads(g.read())
     G = nx.DiGraph()
 

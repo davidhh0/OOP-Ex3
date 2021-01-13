@@ -40,7 +40,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_algo_load(self):
         algo = GraphAlgo()
-        algo.load_from_json("../data/A1_BrokenA")
+        algo.load_from_json("data/A1_BrokenA")
         graph: DiGraph = algo.graph
         self.assertEqual(graph.NumberOfNodes, 17)
         self.assertEqual(graph.NumberOfEdges, 19)
@@ -53,7 +53,7 @@ class MyTestCase(unittest.TestCase):
     def test_big_dfs(self):
         # Checking if there is an exception at some scenario
         algo = GraphAlgo()
-        algo.load_from_json("../data/A5")
+        algo.load_from_json("data/A5")
         random.seed(55555)
         for i in range(1000):
             b = random.randint(0, 47)
@@ -66,7 +66,7 @@ class MyTestCase(unittest.TestCase):
     def test_big_dijkstra(self):
         # Checking if there is an exception at some scenario
         algo = GraphAlgo()
-        algo.load_from_json("../data/A5")
+        algo.load_from_json("data/A5")
         for i in algo.graph.nodes.keys():
             for j in algo.graph.nodes.keys():
                 x = algo.shortest_path(i, j)
@@ -78,7 +78,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_dfs(self):
         algo = GraphAlgo()
-        algo.load_from_json("../data/G_1000_8000_0.json")
+        algo.load_from_json("data/G_1000_8000_0.json")
         graph: DiGraph = algo.graph
         print(algo.connected_components())
         print(algo.connected_component(11))
@@ -87,7 +87,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_connected_componenT(self):
         algo = GraphAlgo()
-        algo.load_from_json("../data/G_30000_240000_0.json")
+        algo.load_from_json("data/G_30000_240000_0.json")
         u = random.randint(0, 30000)
         list = algo.connected_components()
         wantedlist = []
@@ -101,14 +101,14 @@ class MyTestCase(unittest.TestCase):
 
     def test_shortest_path(self):
         algo = GraphAlgo()
-        algo.load_from_json("../data/A5")
+        algo.load_from_json("data/A5")
         algo.shortest_path(0, 47)
 
     def test_plot_on_big_random_graph(self):
         g = create_graph_random()
         algo = GraphAlgo(g)
 
-        algo.load_from_json("../data/A5")
+        algo.load_from_json("data/A5")
         algo.plot_graph()
 
     def test_check_PQ(self):
